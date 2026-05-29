@@ -5,6 +5,7 @@ import { ATECSparkline } from '@/components/family/ATECSparkline';
 import { DeviceCompliance } from '@/components/family/DeviceCompliance';
 import { ConciergeCard } from '@/components/family/ConciergeCard';
 import { WeekSchedule } from '@/components/family/WeekSchedule';
+import { SupplementTracker } from '@/components/family/SupplementTracker';
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -143,10 +144,12 @@ export default async function DashboardPage() {
         />
       </div>
 
+      <SupplementTracker patientId={patient.id} />
+
       <div style={{ marginTop: 24, padding: 24, background: 'var(--bg-card)', border: '1px dashed var(--border-hover)', borderRadius: 18, color: 'var(--text-3)', fontSize: 13, lineHeight: 1.6 }}>
         <strong style={{ color: 'var(--text)' }}>Scaffold note:</strong> remaining sections to port from{' '}
         <code style={{ background: 'var(--bg-warm)', padding: '2px 6px', borderRadius: 4 }}>family_dashboard_v6.html</code>:{' '}
-        Supplement Tracker · Documents · Resources.
+        Documents · Resources.
       </div>
     </main>
   );
