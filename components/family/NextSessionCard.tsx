@@ -28,23 +28,23 @@ export function NextSessionCard({ session }: Props) {
       <div className={styles.label}>Next Session</div>
       <div className={styles.content}>
         <div className={styles.when}>{when} · {timeStr} ET</div>
-        <div className={styles.datetime}>{dateStr} · {session.duration_min}-min Zoom session (single link)</div>
+        <div className={styles.datetime}>{dateStr} · concierge-led block (single Zoom link)</div>
 
         <div className={styles.details}>
           <div>
-            <div className={styles.detailLabel}>Concierge (opens)</div>
+            <div className={styles.detailLabel}>Concierge (leads)</div>
             <div className={styles.detailVal}>
               {session.concierge
                 ? `${session.concierge.first_name} ${session.concierge.last_name[0]}.`
-                : '—'} · 10 min
+                : '—'} · full block
             </div>
           </div>
           <div>
-            <div className={styles.detailLabel}>Clinician (treats)</div>
+            <div className={styles.detailLabel}>OT/PT (Fridays)</div>
             <div className={styles.detailVal}>
               {session.clinician
                 ? `${session.clinician.first_name} ${session.clinician.last_name[0]}.${session.clinician.credentials ? `, ${session.clinician.credentials}` : ''}`
-                : '—'} · 60 min
+                : '—'}
             </div>
           </div>
           <div>

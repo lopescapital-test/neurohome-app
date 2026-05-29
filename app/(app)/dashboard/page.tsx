@@ -2,12 +2,21 @@ import { createClient } from '@/lib/supabase/server';
 import { NextSessionCard } from '@/components/family/NextSessionCard';
 import { ProgressRing } from '@/components/family/ProgressRing';
 import { ATECSparkline } from '@/components/family/ATECSparkline';
-import { DeviceCompliance } from '@/components/family/DeviceCompliance';
 import { ConciergeCard } from '@/components/family/ConciergeCard';
+import { HubLaunchCard } from '@/components/family/HubLaunchCard';
 import { WeekSchedule } from '@/components/family/WeekSchedule';
-import { SupplementTracker } from '@/components/family/SupplementTracker';
-import { DocumentsList } from '@/components/family/DocumentsList';
-import { ResourcesGrid } from '@/components/family/ResourcesGrid';
+import { TodaysProtocol } from '@/components/family/TodaysProtocol';
+import { FamilyResourcesNav } from '@/components/family/FamilyResourcesNav';
+
+// Maps the program_tier enum to a display label
+function tierLabel(tier: string): string {
+  const map: Record<string, string> = {
+    plan_a_full: 'Plan A · Full Intensive',
+    plan_b_lite: 'Plan B · Lite Intensive',
+    pre_intensive: 'Pre-Intensive',
+  };
+  return map[tier] ?? tier.replace(/_/g, ' ');
+}
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -57,24 +66,6 @@ export default async function DashboardPage() {
   const weekEnd = new Date(weekStart);
   weekEnd.setDate(weekEnd.getDate() + 7);
 
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
-  const { count: completedThisWeek } = await supabase
-    .from('exercise_completions')
-    .select('*', { count: 'exact', head: true })
-    .eq('patient_id', patient.id)
-    .eq('completed', true)
-    .gte('completed_date', sevenDaysAgo.toISOString().split('T')[0]);
-
-  const { count: assignmentCount } = await supabase
-    .from('exercise_assignments')
-    .select('*', { count: 'exact', head: true })
-    .eq('patient_id', patient.id)
-    .eq('active', true);
-
-  const totalThisWeek = (assignmentCount ?? 0) * 7;
-
   const { data: concierge } = patient.concierge_user_id
     ? await supabase
         .from('profiles')
@@ -110,31 +101,28 @@ export default async function DashboardPage() {
         </h1>
         <p style={{ fontSize: 13, color: 'var(--text-3)' }}>
           <strong style={{ color: 'var(--text-2)' }}>{patient.first_name}</strong> is in{' '}
-          <strong style={{ color: 'var(--text-2)' }}>Week {patient.week_current}</strong> ·{' '}
-          {patient.program_tier} · {patient.phase.replace(/_/g, ' ')}
+          <strong style={{ color: 'var(--text-2)' }}>Week {patient.week_current} of {patient.week_total}</strong> ·{' '}
+          {tierLabel(patient.program_tier)}
         </p>
       </header>
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16, marginBottom: 16 }}>
         {nextSession && <NextSessionCard session={nextSession} />}
+        <ConciergeCard
+          concierge={concierge}
+          latestMessage={latestConciergeMsg}
+        />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 16 }}>
+        <ATECSparkline history={atecHistory ?? []} />
         <ProgressRing
           weekCurrent={patient.week_current}
           weekTotal={patient.week_total}
           tier={patient.program_tier}
           phase={patient.phase}
         />
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 16 }}>
-        <ATECSparkline history={atecHistory ?? []} />
-        <DeviceCompliance
-          completedThisWeek={completedThisWeek ?? 0}
-          totalThisWeek={totalThisWeek}
-        />
-        <ConciergeCard
-          concierge={concierge}
-          latestMessage={latestConciergeMsg}
-        />
+        <HubLaunchCard tierLabel={tierLabel(patient.program_tier)} weekCurrent={patient.week_current} />
       </div>
 
       <div style={{ marginBottom: 16 }}>
@@ -146,11 +134,10 @@ export default async function DashboardPage() {
         />
       </div>
 
-      <SupplementTracker patientId={patient.id} />
+      <TodaysProtocol patientId={patient.id} />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 16 }}>
-        <DocumentsList patientId={patient.id} />
-        <ResourcesGrid />
+      <div style={{ marginTop: 16 }}>
+        <FamilyResourcesNav />
       </div>
     </main>
   );

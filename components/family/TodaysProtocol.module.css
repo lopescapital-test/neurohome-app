@@ -1,0 +1,42 @@
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.labelRow { display: flex; justify-content: space-between; align-items: center; }
+.label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3); font-weight: 600;
+}
+.detailLink {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3); font-weight: 600;
+}
+.title {
+  font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700;
+  color: var(--text); margin-top: 14px; margin-bottom: 14px; letter-spacing: -0.3px;
+}
+.blocks { display: flex; flex-direction: column; gap: 10px; }
+.block { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; background: var(--bg-card); }
+.summary { list-style: none; cursor: pointer; padding: 14px 16px; display: flex; align-items: center; gap: 12px; user-select: none; }
+.summary::-webkit-details-marker { display: none; }
+.icon { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
+.am { background: var(--amber-light); }
+.mid { background: var(--brand-light); }
+.tx { background: var(--purple-light); }
+.pm { background: var(--blue-light); }
+.head { flex: 1; }
+.blockTitle { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-3); margin-top: 2px; letter-spacing: 0.3px; }
+.chev { color: var(--text-3); transition: transform 0.2s; flex-shrink: 0; }
+.block[open] .chev { transform: rotate(90deg); }
+.body { padding: 4px 16px 16px; border-top: 1px solid var(--border); }
+.step { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px dashed var(--border); font-size: 13px; color: var(--text-2); line-height: 1.45; }
+.step:last-child { border-bottom: none; }
+.stepTime { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-3); min-width: 42px; flex-shrink: 0; padding-top: 2px; }
+.step strong { color: var(--text); font-weight: 600; }
+.featured .summary { background: linear-gradient(135deg, rgba(107,91,210,0.05), transparent); }
