@@ -1,0 +1,46 @@
+:root {
+  /* Surfaces */
+  --bg: #FAFAFA;
+  --bg-warm: #F2F2F2;
+  --bg-card: #FFFFFF;
+  --bg-dark: #0E0E0E;
+  --bg-dark-card: #1A2238;
+
+  /* Borders + text */
+  --border: rgba(14,14,14,0.08);
+  --border-hover: rgba(14,14,14,0.16);
+  --text: #0E0E0E;
+  --text-2: #31312E;
+  --text-3: #6B6B68;
+  --text-inv: #FAFAFA;
+
+  /* Brand (NeuroSolution cyan) */
+  --brand: #00CEFD;
+  --brand-light: #E6F8FE;
+  --brand-glow: rgba(0,206,253,0.18);
+  --brand-deep: #0099C2;
+
+  /* Accents */
+  --accent-red: #F10433;
+  --accent-red-light: #FDE6EB;
+  --accent-green: #0BDA51;
+  --accent-green-light: #E3FAEC;
+  --amber: #F5A623;
+  --amber-light: #FFF4E0;
+  --purple: #6B5BD2;
+  --purple-light: #ECE9FA;
+  --blue: #2D6FD9;
+  --blue-light: #E8F1FD;
+
+  /* Radii */
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 24px;
+  --radius-pill: 100px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(14,14,14,0.04), 0 1px 2px rgba(14,14,14,0.02);
+  --shadow-md: 0 6px 24px rgba(14,14,14,0.06), 0 2px 6px rgba(14,14,14,0.03);
+  --shadow-lg: 0 16px 56px rgba(14,14,14,0.10), 0 4px 12px rgba(14,14,14,0.04);
+  --shadow-brand: 0 8px 32px rgba(0,206,253,0.22);
+}
