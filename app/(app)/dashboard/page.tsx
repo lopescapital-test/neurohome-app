@@ -107,7 +107,7 @@ export default async function DashboardPage() {
       </header>
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16, marginBottom: 16 }}>
-        {nextSession && <NextSessionCard session={nextSession} />}
+        <NextSessionCard session={nextSession} />
         <ConciergeCard
           concierge={concierge}
           latestMessage={latestConciergeMsg}

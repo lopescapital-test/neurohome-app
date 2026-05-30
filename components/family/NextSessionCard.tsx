@@ -3,17 +3,34 @@ import styles from './NextSessionCard.module.css';
 type Clinician = { first_name: string; last_name: string; credentials?: string | null };
 type Concierge = { first_name: string; last_name: string };
 
+type Session = {
+  scheduled_at: string;
+  duration_min: number;
+  zoom_link: string | null;
+  clinician?: Clinician | null;
+  concierge?: Concierge | null;
+};
+
 type Props = {
-  session: {
-    scheduled_at: string;
-    duration_min: number;
-    zoom_link: string | null;
-    clinician?: Clinician | null;
-    concierge?: Concierge | null;
-  };
+  session: Session | null | undefined;
 };
 
 export function NextSessionCard({ session }: Props) {
+  // Empty state — no upcoming session scheduled.
+  if (!session) {
+    return (
+      <section className={styles.card}>
+        <div className={styles.label}>Next Session</div>
+        <div className={styles.content}>
+          <div className={styles.when}>No upcoming session</div>
+          <div className={styles.datetime}>
+            Your concierge will schedule your next block. Check back soon, or send a message if you have questions.
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const date = new Date(session.scheduled_at);
   const when = formatRelative(date);
   const dateStr = date.toLocaleDateString('en-US', {
